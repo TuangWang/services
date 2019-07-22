@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: gateway-service-zuul
+
+server:
+  port: 8888
+
+zuul:
+  sensitiveHeaders: Cookie,Set-Cookie
+  # 默认 Eureka Server会暴露所有注册在它上面的微服务。
+  # 你可以使用 zuul.ignored-services 属性来禁止这种行为，且只有显式配置的服务才会被暴露。
+  ignoredServices: '*'
+  # 设置一个公共的前缀
+  prefix: /api
+  add-proxy-headers: true
+  routes:
+    # 认证中心
+    auth-service:
+      path: /auth/**
+      sensitiveHeaders:
+      serviceId:  idsrv-server
+    # 订单中心
+    order-service:
+      path: /order/**
+      sensitiveHeaders:
+      serviceId:  order-service
+    # 用户中心
+    user:
+      path: /user/**
+      serviceId: msc-user-center
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8000/eureka/
