@@ -33,3 +33,13 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8000/eureka/
+
+# The line key-value: 123 sets the symmetric key used by the Authorization Server to sign the JWT.
+# This key will be used by spring-security-oauth2-autoconfigure to configure token parsing.
+# It’s important to note that, in a production system, we shouldn’t use a symmetric key,
+# specified in the source code of the application. That naturally needs to be configured externally.
+security:
+  oauth2:
+    resource:
+      jwt:
+        key-value: 123
